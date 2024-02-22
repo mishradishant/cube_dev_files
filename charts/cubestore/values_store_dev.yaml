@@ -1,0 +1,466 @@
+## Override the name
+##
+nameOverride: ""
+
+## Provide a name to substitute for the full names of resources
+##
+fullnameOverride: ""
+
+##  Labels to add to all deployed objects
+##
+commonLabels: {}
+
+## Annotations to add to all deployed objects
+##
+commonAnnotations: {}
+
+image:
+  ## Docker image repository
+  ##
+  repository: cubejs/cubestore
+
+  ## Docker image tag.
+  ## Defaults to Chart AppVersion
+  ##
+  tag:
+
+  ## Specify a imagePullPolicy
+  ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+  ##
+  pullPolicy: IfNotPresent
+
+  ## Specify a imagePullSecrets
+  ## ref: https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod
+  ##
+  pullSecrets: []
+
+## Pod Security Context
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+## Some admission policies only allow use of non root containers
+securityContext:
+  enabled: false
+  #fsGroup:
+  #runAsUser:
+
+config:
+  ## The logging level for Cube Store.
+  ##
+  logLevel: "error"
+
+  ## If true, prevents uploading serialized pre-aggregations to cloud storage
+  ##
+  noUpload:
+
+  ## The number of parallel tasks that process non-interactive jobs like data insertion, compaction etc. Defaults to 4
+  ##
+  jobRunners:
+
+  ## If true, then send telemetry to Cube
+  ##
+  telemetry: false
+
+  ## The timeout for SQL queries in seconds. Defaults to 120
+  ##
+  queryTimeout:
+
+  ## The number of Cube Store sub-processes that handle SELECT queries. Defaults to 4
+  ##
+  selectWorkers:
+
+  ## The maximum number of rows to keep in a single chunk of data right after insertion. Defaults to 262144
+  ##
+  walSplitThreshold:
+
+## Used to define the shared volume to store metadata and datasets
+## Prefer use cloudStorage if you are running on "gcp" or "aws"
+## If a cloudStorage configuration is used, no remoteDir will be created
+##
+remoteDir:
+  persistence:
+    ## Resource Policy
+    ## Setting it to "keep" to avoid removing PVCs during a helm delete operation
+    ##
+    resourcePolicy: keep
+
+    ## Persistent Volume size
+    ##
+    size: 10Gi
+
+    ## Additional custom annotations for the PVC
+    ##
+    annotations: {}
+
+    ## Persistent Volume access modes
+    ##
+    accessModes:
+      - ReadWriteMany
+
+    ## @param remoteDir.persistence.storageClass The storage class to use for the remoteDir pvc
+    ## If defined, storageClassName: <storageClass>
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+    ##   GKE, AWS & OpenStack)
+    ##
+    storageClass:
+
+cloudStorage:
+  gcp:
+    ## A Base64 encoded JSON key file for connecting to Google Cloud. Required when using Google Cloud Storage
+    ##
+    credentials:
+    # credentialsFromSecret:
+    #   name:
+    #   key:
+
+    ## The name of a bucket in GCS. Required when using GCS
+    ##
+    bucket:
+
+    ## The path in a GCS bucket to store pre-aggregations. Optional
+    ##
+    subPath:
+
+  aws:
+    ## The Access Key ID for AWS. Required when using AWS S3
+    ##
+    accessKeyID:
+    # accessKeyIDFromSecret:
+    #   name:
+    #   key:
+
+    ## The Secret Access Key for AWS. Required when using AWS S3
+    ##
+    secretKey:
+    # secretKeyFromSecret:
+    #   name:
+    #   key:
+
+    ## The name of a bucket in AWS S3. Required when using AWS S3
+    ##
+    bucket: cdh-dev-euw2-dataengg-datalake-athena-output-bucket
+
+    ## The region of a bucket in AWS S3. Required when using AWS S3
+    ##
+    region: eu-west-2
+
+    ## The path in an AWS S3 bucket to store pre-aggregations. Optional
+    ##
+    subPath:
+
+    ##The number of minutes after which Cube Store should refresh AWS credentials.
+    ##
+    refreshCredsEveryMinutes:
+
+  minio:
+    ## The Access Key ID for minIO. Required when using minIO
+    ##
+    accessKeyID:
+
+    ## The Secret Access Key for minIO. Required when using minIO
+    ##
+    secretKey:
+    # secretKeyFromSecret:
+    #   name:
+    #   key:
+
+    ## The name of the bucket that you want to use minIO. Required when using minIO
+    ##
+    bucket:
+
+    ## The region of a bucket in S3 that you want to use minIO. Optional when using minIO
+    ##
+    region:
+
+    ## The path in a minIO bucket to store pre-aggregations. Optional
+    ##
+    subPath:
+
+    ## The minIO server endpoint. Required when using minIO
+    ##
+    endpoint:
+
+    ## The number of minutes after which Cube Store should refresh minIO credentials.
+    ##
+    credentialsRefreshEveryMinutes:
+
+metrics:
+  # Define which metrics collector format
+  format: statsd
+
+  ## Required IP address to send metrics
+  ##
+  address:
+
+  ## Required port to send where collector server accepts UDP connections
+  ##
+  port:
+
+## Configurations for statsd-prometheus-exporter
+##
+exporter:
+  enabled: true
+  image:
+    repository: prom/statsd-exporter
+    tag: "v0.24.0"
+  extraArgs: []
+  statsd:
+    # Maximum size of your metric mapping cache.
+    # Relies on the least recently used replacement policy if max size is reached.
+    cacheSize: 1000
+
+    # Size of internal queue for processing events.
+    eventQueueSize: 10000
+
+    # Number of events to hold in queue before flushing.
+    eventFlushThreshold: 1000
+
+    # Time interval before flushing events in queue.
+    eventFlushInterval: 200ms
+
+    # Whether you use default mapping.
+    # If set to false, you should provide your own configMap with statsd metrics mapping.
+    useDefaultMapping: true
+
+    # Metrics mapping ConfigMap
+    mappingConfigMapName: cubestore-metrics-mapping
+
+    # Name of the key inside Metric mapping ConfigMap.
+    mappingConfigMapKey: statsd.mappingConf
+
+  livenessProbe:
+    httpGet:
+      path: /health
+      port: http
+
+  readinessProbe:
+    httpGet:
+      path: /health
+      port: http
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 100m
+      memory: 128Mi
+
+  service:
+    # The address on which to expose the web interface and generated Prometheus metrics.
+    port: 9102
+    # Path under which to expose metrics.
+    path: /metrics
+
+router:
+  ## Service account for cubestore router to use
+  ##
+  serviceAccount:
+    create: false
+    name: ""
+    automountServiceAccountToken: true
+    annotations: {}
+
+  ## The port for Cube Store to listen to HTTP connections on
+  ##
+  httpPort: 3030
+
+  ## The port for the router node to listen for connections on
+  ##
+  metaPort: 9999
+
+  ## The port for Cube Store to listen to connections on, for example, 3306
+  ##
+  mysqlPort:
+
+  ## The port for Cube Store to expose status probes
+  ##
+  statusPort: 3031
+
+  persistence:
+    ## Enable persistence for local data using Persistent Volume Claims
+    ##
+    enabled: false
+
+    ## Persistent Volume size
+    ##
+    size: 10Gi
+
+    ## Persistent Volume access modes
+    ##
+    accessModes:
+      - ReadWriteOnce
+
+    ## @param router.persistence.storageClass The storage class to use for the workers pvc
+    ## If defined, storageClassName: <storageClass>
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+    ##   GKE, AWS & OpenStack)
+    ##
+    storageClass:
+
+    ## Additional custom annotations for the PVC
+    ##
+    annotations: {}
+
+  ## Affinity for pod assignment
+  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  ##
+  affinity: {}
+
+  ## Topology spread constraint for pod assignment
+  ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+  ##
+  spreadConstraints: []
+
+  ## Define resources requests and limits for single Pods.
+  ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+  ##
+  resources: {}
+
+  ## Configure options for liveness probes
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+  ##
+  livenessProbe:
+    enabled: true
+    initialDelaySeconds: 10
+    periodSeconds: 30
+    timeoutSeconds: 3
+    successThreshold: 1
+    failureThreshold: 3
+
+  ## Configure options for liveness probes
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+  ##
+  readinessProbe:
+    enabled: true
+    initialDelaySeconds: 10
+    periodSeconds: 30
+    timeoutSeconds: 3
+    successThreshold: 1
+    failureThreshold: 3
+
+  ##  Custom livenessProbe that overrides the default one
+  ##
+  customLivenessProbe: {}
+
+  ## Custom readinessProbe that overrides the default one
+  ##
+  customReadinessProbe: {}
+
+  ## Tolerations for pod assignment
+  ##
+  tolerations: {}
+
+  ## Node selector for pod assignment
+  ##
+  nodeSelector: {}
+
+  service:
+    ## Additional custom annotations for router service
+    ##
+    annotations: {}
+
+  ## Extra environment variables to pass on to the pod. The value is evaluated as a template
+  ## e.g:
+  ## extraEnvVars:
+  ##   - name: FOO
+  ##     value: "bar"
+  ##
+  extraEnvVars:
+    - name: CUBEJS_DB_TYPE
+      value: athena
+
+workers:
+  ## Service account for cubestore workers to use
+  ##
+  serviceAccount:
+    create: false
+    name: ""
+    automountServiceAccountToken: true
+    annotations: {}
+
+  ## Number of workers to deploy
+  ##
+  workersCount: 1
+
+  ## The port for Cube Store workers to listen to connections on
+  ##
+  port: 9001
+
+  persistence:
+    ## Enable persistence for local data using Persistent Volume Claims
+    ##
+    enabled: false
+
+    ## Persistent Volume size
+    ##
+    size: 10Gi
+
+    ## Persistent Volume access modes
+    ##
+    accessModes:
+      - ReadWriteOnce
+
+    ## @param workers.persistence.storageClass The storage class to use for the workers pvc
+    ## If defined, storageClassName: <storageClass>
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+    ##   GKE, AWS & OpenStack)
+    ##
+    storageClass:
+
+    ## Additional custom annotations for the PVC
+    ##
+    annotations: {}
+
+  ## Affinity for pod assignment
+  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  ##
+  affinity: {}
+
+  ## topology spread constraint for pod assignment
+  ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+  ##
+  spreadConstraints: []
+
+  ## Define resources requests and limits for single Pods.
+  ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+  ##
+  resources: {}
+
+  ## Tolerations for pod assignment
+  ##
+  tolerations: {}
+
+  ## Node selector for pod assignment
+  ##
+  nodeSelector: {}
+
+  service:
+    ## Additional custom annotations for worker service
+    ##
+    annotations: {}
+
+  ## Extra environment variables to pass on to the pod. The value is evaluated as a template
+  ## e.g.:
+  ## extraEnvVars:
+  ##   - name: FOO
+  ##     value: "bar"
+  ##
+  extraEnvVars: []
+
+  ## Configurations for init-router initContainer
+  initRouter:
+    image:
+      ## Docker initRouter image repository
+      ##
+      repository: busybox
+
+      ## Docker initRouter image tag
+      ##
+      tag: latest
+
+    ## Define resources requests and limits for single Pods.
+    ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+    ##
+    resources: {}
