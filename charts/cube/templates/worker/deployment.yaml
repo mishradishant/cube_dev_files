@@ -46,24 +46,18 @@ spec:
         {{- toYaml .Values.config.initContainers | nindent 8 }}
       {{- end }}
       containers:
+        {{- if .Values.image.gitSyncRepository }}
         - name: git-sync
-          image: registry.k8s.io/git-sync:v3.1.6
+          image: "{{ .Values.image.gitSyncRepository }}:{{ .Values.image.gitSyncTag }}"
+          {{- if .Values.config.gitSyncvolumeMounts }}
           volumeMounts:
-            - name: cube-models-gitsync
-              mountPath: /git_dir
+            {{- toYaml .Values.config.gitSyncvolumeMounts | nindent 12 }}
+          {{- end }}
           env:
-            - name: GIT_SYNC_REPO
-              value: "https://github.com/mishradishant/cube_dev_files.git"
-            - name: GIT_SYNC_BRANCH
-              value: "cube-models"
-            - name: GIT_SYNC_ROOT
-              value: /git_dir
-            - name: GIT_SYNC_DEST
-              value: "models"
-            - name: GIT_SYNC_PERIOD
-              value: "10"
-            - name: GIT_SYNC_ONE_TIME
-              value: "false"
+            {{- if .Values.gitSyncExtraEnvVars }}
+            {{- include "cube.tplvalues.render" (dict "value" .Values.gitSyncExtraEnvVars "context" $) | nindent 12 }}
+            {{- end }}
+        {{- end }}
         - name: cube
           {{- if .Values.image.tag }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

@@ -366,13 +366,7 @@ router:
   ##   - name: FOO
   ##     value: "bar"
   ##
-  extraEnvVars:
-    - name: AWS_SECRET_ACCESS_KEY
-      value: 
-    - name: AWS_ACCESS_KEY_ID
-      value: 
-    - name: AWS_SESSION_TOKEN
-      value: 
+  extraEnvVars: []
 
 workers:
   ## Service account for cubestore workers to use
@@ -451,13 +445,7 @@ workers:
   ##   - name: FOO
   ##     value: "bar"
   ##
-  extraEnvVars:
-    - name: AWS_SECRET_ACCESS_KEY
-      value: 
-    - name: AWS_ACCESS_KEY_ID
-      value: 
-    - name: AWS_SESSION_TOKEN
-      value: 
+  extraEnvVars: []
 
   ## Configurations for init-router initContainer
   initRouter:

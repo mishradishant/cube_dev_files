@@ -105,7 +105,7 @@ config:
 
   ## If true, enables debug logging
   ##
-  debug: true
+  debug: false
 
   ## The logging level for Cube
   ##
@@ -218,9 +218,9 @@ config:
   - name: cube-models-gitsync
     mountPath: /git_dir
 
-  volumeMounts:
   ## The config volumeMounts
   ## Will be used to both api and worker
+  volumeMounts:
   ## In case you want to use configMap
   - name: conf
     # readOnly: true
@@ -325,7 +325,7 @@ datasources:
 
     ## The schema within the database to connect to
     ##
-    schema: raw
+    schema:
 
     ## The name of the database to connect to
     ##
@@ -456,11 +456,10 @@ datasources:
       ## The AWS Access Key ID to use for database connections
       ##
       key:
-      key2:
       # keyFromSecret:
       #   name:
       #   key:
-      token2:
+
       ## The AWS region of the Cube deployment
       ##
       region: eu-west-2
@@ -472,7 +471,6 @@ datasources:
       ## The AWS Secret Access Key to use for database connections
       ##
       secret:
-      secret2:
       # secretFromSecret:
       #   name:
       #   key:

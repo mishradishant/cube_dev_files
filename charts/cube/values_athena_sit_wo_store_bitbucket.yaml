@@ -20,6 +20,20 @@ commonAnnotations: {}
 ##   - name: FOO
 ##     value: "bar"
 ##
+gitSyncExtraEnvVars:
+    - name: GIT_SYNC_REPO
+      value: "https://dev.ops:NDI3MTU0NzI3ODcwOgHAYPQNYKlphjtq7R9euI5Fhoow@repos.currenciesdirect.com:8443/scm/lapetus/data-platform.git"
+    - name: GIT_SYNC_BRANCH
+      value: "feature/cube-models"
+    - name: GIT_SYNC_ROOT
+      value: /git_dir
+    - name: GIT_SYNC_DEST
+      value: "models"
+    - name: GIT_SYNC_PERIOD
+      value: "10"
+    - name: GIT_SYNC_ONE_TIME
+      value: "false"
+
 extraEnvVars: []
 
 ## Name of a Config Map containing extra environment variables to pass on to the pod
@@ -29,16 +43,17 @@ extraEnvVarsFromConfigMap:
 ## Name of a Secret containing extra environment variables to pass on to the pod
 ##
 extraEnvVarsFromSecret:
-  athena
 
 image:
   ## Docker image repository
   ##
   repository: cubejs/cube
+  gitSyncRepository: registry.k8s.io/git-sync
 
   ## Docker image tag.
   ##
   tag:
+  gitSyncTag: v3.1.6
 
   ## Specify a imagePullPolicy
   ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -85,7 +100,7 @@ config:
 
   ## If true, enables development mode
   ##
-  devMode: false
+  devMode: true
 
   ## If true, enables debug logging
   ##
@@ -101,7 +116,7 @@ config:
 
   ## The secret key used to sign and verify JWTs. Generated on project scaffold
   ##
-  apiSecret: secret
+  apiSecret:
   # apiSecretFromSecret:
   #   name:
   #   key:
@@ -187,29 +202,37 @@ config:
   - name: conf
     configMap:
       name: conf-cubejs
-  - name: cubes
-    configMap:
-      name: conf-cubes
-  - name: views
-    configMap:
-      name: conf-views
+  # - name: cubes
+  #   configMap:
+  #     name: conf-cubes
+  # - name: views
+  #   configMap:
+  #     name: conf-views
+  - name: cube-models-gitsync
+    emptyDir: {}
   ## In case you want to use init container
   # - name: data-volume
   #   emptyDir: {}
+  gitSyncvolumeMounts:
+  - name: cube-models-gitsync
+    mountPath: /git_dir
 
   ## The config volumeMounts
   ## Will be used to both api and worker
   volumeMounts:
   ## In case you want to use configMap
   - name: conf
-    readOnly: true
+    # readOnly: true
     mountPath: /cube/conf/
-  - name: cubes
-    readOnly: true
-    mountPath: /cube/conf/schema/cubes/
-  - name: views
-    readOnly: true
-    mountPath: /cube/conf/schema/views/
+  # - name: cubes
+  #   readOnly: true
+  #   mountPath: /cube/conf/schema/cubes/
+  # - name: views
+  #   readOnly: true
+  #   mountPath: /cube/conf/schema/views/
+  - name: cube-models-gitsync
+    mountPath: /cube/conf/schema
+    # subPath: rev-0b5d291e2674d981ac2692b453ebfef5885c9692
   ## In case you want to use init container
   # - name: data-volume
   #   readOnly: true
@@ -301,7 +324,7 @@ datasources:
 
     ## The schema within the database to connect to
     ##
-    schema: dev_curated
+    schema:
 
     ## The name of the database to connect to
     ##
@@ -432,30 +455,28 @@ datasources:
       ## The AWS Access Key ID to use for database connections
       ##
       key:
-      key2:
       # keyFromSecret:
       #   name:
       #   key:
-      token2:
+
       ## The AWS region of the Cube deployment
       ##
       region: eu-west-2
 
       ## The S3 path to store query results made by the Cube deployment
       ##
-      s3OutputLocation: s3://cdh-dev-euw2-dataengg-datalake-athena-output-bucket
+      s3OutputLocation: s3://cdh-sit-euw2-dataengg-datalake-athena-output-bucket
 
       ## The AWS Secret Access Key to use for database connections
       ##
       secret:
-      secret2:
       # secretFromSecret:
       #   name:
       #   key:
 
       ## The name of the workgroup in which the query is being started
       ##
-      workgroup: dev-admin-workgroup
+      workgroup: sit-service-accounts-workgroup
 
       ## The name of the catalog to use by default
       ##
@@ -598,7 +619,7 @@ datasources:
 cubestore:
   ## The hostname of the Cube Store deployment
   ##
-  host: cubestore-router
+  host:
 
   ## The port of the Cube Store deployment
   ##

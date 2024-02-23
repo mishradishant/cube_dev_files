@@ -255,10 +255,10 @@ router:
   ## Service account for cubestore router to use
   ##
   serviceAccount:
-    create: true
-    name: "cubestore-router"
+    create: false
+    name: ""
     automountServiceAccountToken: true
-    annotations: { eks.amazonaws.com/role-arn: arn:aws:iam::314351157218:role/cdh-dev-dataengg-cube-service-account-role}
+    annotations: {}
 
   ## The port for Cube Store to listen to HTTP connections on
   ##
@@ -366,16 +366,22 @@ router:
   ##   - name: FOO
   ##     value: "bar"
   ##
-  extraEnvVars: []
+  extraEnvVars:
+    - name: AWS_SECRET_ACCESS_KEY
+      value: 
+    - name: AWS_ACCESS_KEY_ID
+      value: 
+    - name: AWS_SESSION_TOKEN
+      value:
 
 workers:
   ## Service account for cubestore workers to use
   ##
   serviceAccount:
-    create: true
-    name: "cubestore-workers"
+    create: false
+    name: ""
     automountServiceAccountToken: true
-    annotations: { eks.amazonaws.com/role-arn: arn:aws:iam::314351157218:role/cdh-dev-dataengg-cube-service-account-role}
+    annotations: {}
 
   ## Number of workers to deploy
   ##
@@ -445,7 +451,13 @@ workers:
   ##   - name: FOO
   ##     value: "bar"
   ##
-  extraEnvVars: []
+  extraEnvVars:
+    - name: AWS_SECRET_ACCESS_KEY
+      value:
+    - name: AWS_ACCESS_KEY_ID
+      value:
+    - name: AWS_SESSION_TOKEN
+      value:
 
   ## Configurations for init-router initContainer
   initRouter:
