@@ -1,0 +1,87 @@
+cubes:
+  - name: branch_working_day
+    sql_table: FACT.vw_BranchWorkingDay
+    data_source: default
+
+    joins: 
+      - name: calendar
+        relationship: many_to_one
+        sql: "{CUBE}.BudgetDate = {calendar.CalendarDate}"
+      - name: branch
+        relationship: many_to_one
+        sql: "{CUBE}.BranchKPIKey = {branch.branchkey}"       
+
+      - name: leads
+        relationship: many_to_one
+        sql: >
+          {CUBE}.BranchKPIKey = {leads.kpibranchkey} AND {CUBE}.BudgetDate = {leads.enquirycreateddatekey}
+      - name: registration
+        relationship: many_to_one
+        sql: >
+          {CUBE}.BranchKPIKey = {registration.kpibranchkey} AND {CUBE}.BudgetDate = {registration.RegisteredDateKey}
+      - name: ndc
+        relationship: many_to_one
+        sql: >
+          {CUBE}.BranchKPIKey = {ndc.kpibranchkey} AND {CUBE}.BudgetDate = {ndc.FirstTradedatekey}
+
+      - name: deal_kpis
+        relationship: many_to_one
+        sql: >
+          {CUBE}.BranchKPIKey = {deal_kpis.kpibranchkey} AND {CUBE}.BudgetDate = {deal_kpis.DealDateKey}
+
+
+    dimensions:
+      - name: BranchKPIKeyBudgetdate
+        sql: "CONCAT(BranchKPIKey,'_',BranchKPIKey)"
+        type: string
+        primary_key: true
+
+      - name: BranchKPIKey
+        sql: BranchKPIKey
+        type: number
+
+      - name: BudgetDate
+        sql: BudgetDate
+        type: string
+
+
+
+    measures:
+      - name: BranchWorkingDays
+        sql: BudgetDate
+        type: count_distinct
+    
+      - name: LeadRunRate
+        sql: "{leads.LeadCount} / {branch_working_day.BranchWorkingDays}"
+        type: number
+        format: percent  
+
+      - name: RegistrationRunRate
+        sql: "{registration.registrations} / {branch_working_day.BranchWorkingDays}"
+        type: number
+        format: percent 
+
+      - name: NDCRunRate
+        sql: "{ndc.NDCs} / {branch_working_day.BranchWorkingDays}"
+        type: number
+        format: percent               
+
+      - name: RevenueRunRate
+        sql: "{deal_kpis.revenue_gbp} / {branch_working_day.BranchWorkingDays}"
+        type: number
+        format: percent    
+
+      - name: TurnoverRunRate
+        sql: "{deal_kpis.turnover_gbp} / {branch_working_day.BranchWorkingDays}"
+        type: number
+        format: percent    
+
+      - name: TradeRunRate
+        sql: "{deal_kpis.Dealcounts} / {branch_working_day.BranchWorkingDays}"
+        type: number
+        format: percent                                
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
+

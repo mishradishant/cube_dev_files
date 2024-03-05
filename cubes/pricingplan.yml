@@ -1,0 +1,21 @@
+cubes:
+  - name: pricingplan
+    sql_table: Dim.Pricingplan
+    data_source: default
+
+    joins: []
+
+    dimensions:
+      - name: pricingplankey
+        sql: PricingPlankey
+        type: number
+        primary_key: true
+
+      - name:  pricingplan
+        sql:  pricingplan
+        type: string
+      
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
+

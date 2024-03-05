@@ -1,0 +1,88 @@
+cubes:
+  - name: customer
+    sql_table: Fact.vw_ClientKPI_ForCube
+    data_source: default
+
+
+    dimensions:
+      - name: OriginCustomerKey
+        sql: OriginCustomerKey
+        type: number
+        primary_key: true
+
+      - name: ClientName
+        sql: ClientName
+        type: string                
+
+      - name: AccountStatus
+        sql: AccountStatus
+        type: string                
+
+      - name: AccountSubStatus
+        sql: AccountSubStatus
+        type: string                
+
+      - name: AcqLeadTypeIn
+        sql: AcqLeadTypeIn
+        type: string         
+
+      - name: Actionedlead
+        sql: Actionedlead
+        type: string 
+
+      - name: ClientBillingCountry
+        sql: ClientBillingCountry
+        type: string 
+
+      - name: PrimaryContactMailingCountry
+        sql: PrimaryContactMailingCountry
+        type: string 
+
+      - name: BirthYear
+        sql: BirthYear
+        type: string 
+
+      - name: GCLIDFlag
+        sql: GCLIDFlag
+        type: string                                                         
+
+      - name: HasClientRegistered
+        sql: HasClientRegistered
+        type: string  
+
+      - name: HasDealtFirstTrade
+        sql: HasDealtFirstTrade
+        type: string  
+
+      - name: IsNGOPLead
+        sql: IsNGOPLead
+        type: string  
+
+      - name: IsUnconvertedTMLead
+        sql: IsUnconvertedTMLead
+        type: string  
+
+      - name: OrganisationPartner
+        sql: OrganisationPartner
+        type: string  
+
+      - name: PPClead
+        sql: PPClead
+        type: string  
+
+      - name: PrimaryContactCountryOfResidence
+        sql: PrimaryContactCountryOfResidence
+        type: string  
+
+      - name: AcqServiceRequired
+        sql: AcqServiceRequired
+        type: string                                          
+
+      - name: IsStpRegCustomer
+        sql: IsStpRegCustomer
+        type: string    
+   
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
+

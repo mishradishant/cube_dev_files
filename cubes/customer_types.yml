@@ -1,0 +1,25 @@
+cubes:
+  - name: customer_types
+    sql_table: Dim.CustomerType
+    data_source: default
+
+    joins: []
+
+    dimensions:
+      - name: customer_type_key
+        sql: CustomerTypeKey
+        type: string
+        primary_key: true
+
+      - name: customer_type
+        sql: CustomerType
+        type: string
+
+      - name: customer_type_reporting
+        sql: CustomerTypeReporting
+        type: string
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
+

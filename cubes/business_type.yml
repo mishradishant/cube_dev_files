@@ -1,0 +1,30 @@
+cubes:
+  - name: business_type
+    sql_table: Dim.BusinessType
+    data_source: default
+
+    joins: []
+
+    dimensions:
+      - name: businesstypekey
+        sql: businesstypekey
+        type: number
+        primary_key: true
+
+      - name: businesstype
+        sql: businesstype
+        type: string        
+
+      - name: businessview
+        sql: BusinessView
+        type: string
+
+      - name: dealtype
+        sql: DealType
+        type: string
+
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
+

@@ -1,0 +1,127 @@
+cubes:
+  - name: leads
+    sql_table: Fact.vw_ClientKPI_ForCube
+    data_source: default
+
+    joins:
+      - name: acq_channel
+        relationship: many_to_one
+        sql: "{CUBE}.JunkAcqChannelKey = {acq_channel.JunkAcqChannelKey}"   
+      - name: acq_sub_source
+        relationship: many_to_one
+        sql: "{CUBE}.AcqSubSourceKey = {acq_sub_source.AcqSubSourceKey}"          
+      - name: actual_budget_target
+        relationship: many_to_one
+        sql: "{CUBE}.IsActualOrBudgetKey = {actual_budget_target.actual_budget_target_key}"
+      - name: affiliate
+        relationship: many_to_one
+        sql: "{CUBE}.AcqOriginAffiliateKey = {affiliate.OriginAffiliateKey}"  
+      - name: aietv_band
+        relationship: many_to_one
+        sql: "{CUBE}.AIETVKey = {aietv_band.AIETVKey}" 
+      - name: affiliate_wealth_management_partner
+        relationship: many_to_one
+        sql: "{CUBE}.WealthManagementPartnerKey = {affiliate_wealth_management_partner.WealthManagementPartnerKey}"                
+
+
+      - name: branch
+        relationship: many_to_one
+        sql: "{CUBE}.kpibranchkey = {branch.branchkey}"       
+      - name: calendar
+        relationship: many_to_one
+        sql: "{CUBE}.enquirycreateddatekey = {calendar.CalendarDate}"         
+      - name: customer
+        relationship: many_to_one
+        sql: "{CUBE}.OriginCustomerKey = {customer.OriginCustomerKey}"
+      - name: customer_types
+        relationship: many_to_one
+        sql: "{CUBE}.CustomerTypeKey = {customer_types.customer_type_key}"
+      - name: deal_country
+        relationship: many_to_one
+        sql: "{CUBE}.ClientBillingCountryKey = {deal_country.CountryKey}"   
+      - name: etv
+        relationship: many_to_one
+        sql: "{CUBE}.AcqEstTransValueKey = {etv.AcqEstTransValueKey}"   
+      - name: forecast
+        relationship: many_to_one
+        sql: "{CUBE}.EnquiryForecastKey = {forecast.ForecastKey}"             
+      - name: geographical
+        relationship: many_to_one
+        sql: "{CUBE}.UserHierarchyKey = {geographical.UserHierarchyKey}"   
+      - name: go_to_market
+        relationship: many_to_one
+        sql: "{CUBE}.GTM = {go_to_market.GTM}"   
+      - name: instigating_direction
+        relationship: many_to_one
+        sql: "{CUBE}.ACQInstigatingDirection = {instigating_direction.InstigatingDirectionType}"  
+      - name: leadvalue
+        relationship: many_to_one
+        sql: "{CUBE}.LeadValueKey = {leadvalue.LeadValueKey}"                                  
+      - name: m_and_a_proforma
+        relationship: many_to_one
+        sql: "{CUBE}.EnquiryCreatedDateAcquisitionStatus = {m_and_a_proforma.AcquisitionStatusKey}"           
+      - name: ndc
+        relationship: many_to_one
+        sql: "{CUBE}.OriginCustomerKey = {ndc.OriginCustomerKey}"   
+      - name: organisation_legal_entity
+        relationship: many_to_one
+        sql: "{CUBE}.OrganisationLegalEntityKey = {organisation_legal_entity.OrganisationLegalEntityKey}" 
+      - name: pillar
+        relationship: many_to_one
+        sql: "{CUBE}.PillarKey = {pillar.PillarKey}"          
+      - name: ppc
+        relationship: many_to_one
+        sql: "{CUBE}.PPCKey = {ppc.PPCKey}"  
+      - name: pricingplan
+        relationship: many_to_one
+        sql: "{CUBE}.pricingplankey = {pricingplan.pricingplankey}"   
+      - name: registration
+        relationship: many_to_one
+        sql: "{CUBE}.OriginCustomerKey = {registration.OriginCustomerKey}"          
+      - name: user
+        relationship: many_to_one
+        sql: "{CUBE}.UserHierarchyKey = {user.UserHierarchyKey}"                            
+
+
+    dimensions:
+      - name: OriginCustomerKey
+        sql: OriginCustomerKey
+        type: number
+        primary_key: true
+
+      - name: enquirycreateddatekey
+        sql: enquirycreateddatekey
+        type: time
+
+      - name: kpibranchkey
+        sql: kpibranchkey
+        type: string        
+
+
+   
+
+    measures:
+      - name: LeadCount
+        sql: LeadCount
+        type: sum
+      
+      - name: AffiliateCountClient
+        sql: AcqAffiliateNumber
+        type: count_distinct
+
+      - name: LeadToNDC_Percentage
+        sql: "{ndc.NDCs} / {LeadCount} * 100"
+        type: number
+        format: percent 
+
+      - name: LeadToReg_Percentage
+        sql: "{registration.registrations} / {LeadCount} * 100"
+        type: number
+        format: percent 
+
+    
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
+

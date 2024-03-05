@@ -1,0 +1,29 @@
+cubes:
+  - name: tenure
+    sql_table: Dim.NewTransCoreType
+    data_source: default
+
+    joins: []
+
+    dimensions:
+      - name: NewTransCoreTypeKey
+        sql: NewTransCoreTypeKey
+        type: number
+        primary_key: true
+    
+      - name:  NewTransCoreType
+        sql:  NewTransCoreType
+        type: string
+
+      - name:  NewExisting
+        sql:  NTCNewExisting
+        type: string
+
+      - name:  First12mNonFirst12m
+        sql:  First12Months
+        type: string        
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
+

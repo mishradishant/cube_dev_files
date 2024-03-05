@@ -1,0 +1,22 @@
+cubes:
+  - name: m_and_a_proforma
+    sql: SELECT 0 AS AcquisitionStatusKey, 'Pre-acquistion' AS AcquisitionStatus UNION ALL SELECT 1 AS AcquisitionStatusKey, 'Off' AS AcquisitionStatus
+    data_source: default
+
+    joins: []
+
+    dimensions:
+      - name: AcquisitionStatusKey
+        sql: AcquisitionStatusKey
+        type: number
+        primary_key: true
+
+      - name: AcquisitionStatus
+        sql: AcquisitionStatus
+        type: string
+   
+
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started

@@ -1,0 +1,37 @@
+cubes:
+  - name: affiliate
+    sql_table: FACT.vw_AffiliateKPI_ForCube
+    #data_source: default
+
+    #joins: []
+
+    dimensions:
+      - name: OriginAffiliateKey
+        sql: OriginAffiliateKey
+        type: number
+        primary_key: true
+
+      - name: AffiliateBillingCountry
+        sql: BillingCountry
+        type: string
+
+      - name: AffiliateLegalEntity
+        sql: AffiliateLegalEntity
+        type: string
+
+      - name: AffiliateName
+        sql: AffiliateName
+        type: string        
+    
+      - name: AffiliateName
+        sql: AffiliateName
+        type: string
+
+      - name: AffiliateNumber
+        sql: AffiliateNumber
+        type: string        
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
+

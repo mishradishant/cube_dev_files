@@ -1,0 +1,33 @@
+cubes:
+  - name: acq_channel
+    sql_table: Dim.Vw_Junk_AcqChannel
+    #data_source: default
+
+    #joins: []
+
+    dimensions:
+      - name: JunkAcqChannelKey
+        sql: JunkAcqChannelKey
+        type: number
+        primary_key: true
+
+      - name: AcqChannel
+        sql: AcqChannel
+        type: string
+
+      - name: AcqSource
+        sql: AcqSource
+        type: string
+
+      - name: AffiliateCategory
+        sql: AcqAffiliateCategory
+        type: string        
+
+      - name: AcqAffiliateCategoryGroup
+        sql: AcqAffiliateCategoryGroup
+        type: string        
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
+

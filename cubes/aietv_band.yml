@@ -1,0 +1,26 @@
+cubes:
+  - name: aietv_band
+    sql_table: Dim.vw_AIETVBand
+    #data_source: default
+
+    #joins: []
+
+    dimensions:
+      - name: AIETVKey
+        sql: AIETVKey
+        type: number
+        primary_key: true
+
+      - name: AIETV
+        sql: AIETV
+        type: string
+
+      - name: AIConversionProbability
+        sql: AIConversionProbability
+        type: string
+
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
+

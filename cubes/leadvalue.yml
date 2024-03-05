@@ -1,0 +1,24 @@
+cubes:
+  - name: leadvalue
+    sql_table: DIM.LeadValue
+    data_source: default
+
+    joins: []
+
+    dimensions:
+      - name: LeadValueKey
+        sql: LeadValueKey
+        type: number
+        primary_key: true
+
+      - name: LeadValueGroup
+        sql: LeadValueGroup
+        type: string
+   
+      - name: LeadValue
+        sql: LeadValue
+        type: string
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started

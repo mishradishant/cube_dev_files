@@ -1,0 +1,26 @@
+cubes:
+  - name: acq_sub_source
+    sql_table: Dim.AcqSubSource
+    #data_source: default
+
+    #joins: []
+
+    dimensions:
+      - name: AcqSubSourceKey
+        sql: AcqSubSourceKey
+        type: number
+        primary_key: true
+
+      - name: AcqSubSourceDesc
+        sql: AcqSubSourceReportingDesc
+        type: string
+
+      - name: AcqSubSourceReporting
+        sql: AcqSubSourceReporting
+        type: string
+    
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
+

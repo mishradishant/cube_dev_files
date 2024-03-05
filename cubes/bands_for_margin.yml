@@ -1,0 +1,22 @@
+cubes:
+  - name: bands_for_margin
+    sql_table: Dim.vw_BandsForMargin
+    #data_source: default
+
+    #joins: []
+
+    dimensions:
+      - name: BandId
+        sql: BandId
+        type: number
+        primary_key: true
+
+      - name: MarginBands
+        sql: BandRange
+        type: string
+
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
+

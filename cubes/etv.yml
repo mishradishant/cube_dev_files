@@ -1,0 +1,25 @@
+cubes:
+  - name: etv
+    sql_table: Dim.vw_AcqEstTransValue
+    data_source: default
+
+    joins: []
+
+    dimensions:
+      - name: AcqEstTransValueKey
+        sql: AcqEstTransValueKey
+        type: number
+        primary_key: true
+
+      - name: etvs
+        sql: etv
+        type: string
+
+      - name: ValueName
+        sql: ValueName
+        type: string        
+
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started

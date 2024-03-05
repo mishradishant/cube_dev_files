@@ -1,0 +1,33 @@
+cubes:
+  - name: ppc
+    sql_table: Dim.vw_PPC
+    data_source: default
+
+    joins: []
+
+    dimensions:
+      - name: PPCKey
+        sql: PPCKey
+        type: number
+        primary_key: true
+
+      - name: SearchEngineName
+        sql: SearchEngineName
+        type: string
+
+      - name: KeywordMatchType
+        sql: KeywordMatchType
+        type: string
+
+      - name: Criteria
+        sql: Criteria
+        type: string
+
+      - name: OriginCampaignName
+        sql: OriginCampaignName
+        type: string        
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
+

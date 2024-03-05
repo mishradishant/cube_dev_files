@@ -1,0 +1,86 @@
+cubes:  
+  - name: calendar
+    sql_table: Dim.Calendar
+    data_source: default
+
+    joins: []
+    
+    dimensions:
+      - name: CalendarDate
+        sql: CalendarDate
+        type: string
+        primary_key: true
+ 
+      - name: CalendarYear
+        sql: CalendarYear
+        type: string
+ 
+      - name: CalendarHalf
+        sql: CalendarHalf
+        type: string
+ 
+      - name: CalendarYearHalf
+        sql: CalendarYearHalf
+        type: string
+ 
+      - name: CalendarQuarter
+        sql: CalendarQuarter
+        type: string
+ 
+      - name: CalendarYearQuarter
+        sql: CalendarYearQuarter
+        type: string
+ 
+      - name: CalendarMonth
+        sql: CalendarMonth
+        type: string
+ 
+      - name: CalendarMonthName
+        sql: CalendarMonthName
+        type: string
+ 
+      - name: FinYear
+        sql: FinYear
+        type: string
+ 
+      - name: FinlHalf
+        sql: FinlHalf
+        type: string
+ 
+      - name: FinYearHalf
+        sql: FinYearHalf
+        type: string
+ 
+      - name: FinYearHalfString
+        sql: FinYearHalfString
+        type: string
+ 
+      - name: FinQuarter
+        sql: FinQuarter
+        type: string
+ 
+      - name: FinYearQuarter
+        sql: FinYearQuarter
+        type: string
+ 
+      - name: FinYearQuarterString
+        sql: FinYearQuarterString
+        type: string
+ 
+      - name: FinYearMonth
+        sql: FinYearMonth
+        type: string
+ 
+      - name: FinMonth
+        sql: FinMonth
+        type: string
+ 
+      - name: FinMonthName
+        sql: FinMonthName
+        type: string
+
+   
+ 
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started

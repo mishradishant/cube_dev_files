@@ -1,0 +1,203 @@
+cubes:
+  - name: deal_kpis
+    sql_table: FACT.vw_DealKPI_ForCube
+    data_source: default
+
+    joins:
+      - name: acq_channel
+        relationship: many_to_one
+        sql: "{CUBE}.JunkAcqChannelKey = {acq_channel.JunkAcqChannelKey}"
+      - name: acq_sub_source
+        relationship: many_to_one
+        sql: "{CUBE}.AcqSubSourceKey = {acq_sub_source.AcqSubSourceKey}" 
+      - name: actual_budget_target
+        relationship: many_to_one
+        sql: "{CUBE}.IsActualOrBudgetKey = {actual_budget_target.actual_budget_target_key}"        
+      - name: affiliate_wealth_management_partner
+        relationship: many_to_one
+        sql: "{CUBE}.WealthManagementPartnerKey = {affiliate_wealth_management_partner.WealthManagementPartnerKey}"                
+      - name: affiliate
+        relationship: many_to_one
+        sql: "{CUBE}.AcqOriginAffiliateKey = {affiliate.OriginAffiliateKey}"  
+      - name: aietv_band
+        relationship: many_to_one
+        sql: "{CUBE}.AIETVKey = {aietv_band.AIETVKey}"  
+      - name: bands_for_margin
+        relationship: many_to_one
+        sql: "{CUBE}.MarginBandKey = {bands_for_margin.BandId}"  
+      - name: bands_for_turnover
+        relationship: many_to_one
+        sql: "{CUBE}.TurnoverBandKey = {bands_for_turnover.BandId}"                             
+      - name: leads
+        relationship: many_to_one
+        sql: "{CUBE}.OriginCustomerKey = {leads.OriginCustomerKey}"  
+      - name: registration
+        relationship: many_to_one
+        sql: "{CUBE}.OriginCustomerKey = {registration.OriginCustomerKey}"        
+      - name: ndc
+        relationship: many_to_one
+        sql: "{CUBE}.OriginCustomerKey = {ndc.OriginCustomerKey}"             
+      - name: customer
+        relationship: many_to_one
+        sql: "{CUBE}.OriginCustomerKey = {customer.OriginCustomerKey}"           
+      - name: currency_type
+        relationship: many_to_one
+        sql: "{CUBE}.CurrencyTypeKey = {currency_type.CurrencyTypeKey}"             
+      - name: customer_types
+        relationship: many_to_one
+        sql: "{CUBE}.CustomerTypeKey = {customer_types.customer_type_key}"
+
+      - name: calendar
+        relationship: many_to_one
+        sql: "{CUBE}.DealDateKey = {calendar.CalendarDate}"
+      - name: branch
+        relationship: many_to_one
+        sql: "{CUBE}.kpibranchkey = {branch.branchkey}"        
+      - name: business_type
+        relationship: many_to_one
+        sql: "{CUBE}.businesstypekey = {business_type.businesstypekey}"     
+      - name: deal_channel
+        relationship: many_to_one
+        sql: "{CUBE}.dealtbychannelkey = {deal_channel.dealchannelkey}"  
+      - name: deal_country
+        relationship: many_to_one
+        sql: "{CUBE}.dealCountryKey = {deal_country.CountryKey}"         
+      - name: deal_type
+        relationship: many_to_one
+        sql: "{CUBE}.DealTypeKey = {deal_type.DealTypeKey}"  
+      - name: etv
+        relationship: many_to_one
+        sql: "{CUBE}.AcqEstTransValueKey = {etv.AcqEstTransValueKey}"   
+      - name: forecast
+        relationship: many_to_one
+        sql: "{CUBE}.ForecastKey = {forecast.ForecastKey}"     
+      - name: geographical
+        relationship: many_to_one
+        sql: "{CUBE}.UserHierarchyKey = {geographical.UserHierarchyKey}"  
+      - name: go_to_market
+        relationship: many_to_one
+        sql: "{CUBE}.GTM = {go_to_market.GTM}"                 
+      - name: instigating_direction
+        relationship: many_to_one
+        sql: "{CUBE}.ACQInstigatingDirection = {instigating_direction.InstigatingDirectionType}"                  
+      - name: leadvalue
+        relationship: many_to_one
+        sql: "{CUBE}.LeadValueKey = {leadvalue.LeadValueKey}"   
+      - name: m_and_a_proforma
+        relationship: many_to_one
+        sql: "{CUBE}.DealDateAcquisitionStatus = {m_and_a_proforma.AcquisitionStatusKey}"   
+      - name: organisation_legal_entity
+        relationship: many_to_one
+        sql: "{CUBE}.LegalEntityKey = {organisation_legal_entity.OrganisationLegalEntityKey}"   
+      - name: pillar
+        relationship: many_to_one
+        sql: "{CUBE}.PillarKey = {pillar.PillarKey}"  
+      - name: pricingplan
+        relationship: many_to_one
+        sql: "{CUBE}.pricingplankey = {pricingplan.pricingplankey}"  
+
+      - name: ppc
+        relationship: many_to_one
+        sql: "{CUBE}.PPCKey = {ppc.PPCKey}"  
+      - name: product
+        relationship: many_to_one
+        sql: "{CUBE}.BusinessTypeKey = {product.BusinessTypeKey}"          
+      - name: source_application
+        relationship: many_to_one
+        sql: "{CUBE}.SourceApplicationKey = {source_application.DataLookupValueKey}"          
+      - name: tenure
+        relationship: many_to_one
+        sql: "{CUBE}.NewTransCoreTypeKey = {tenure.NewTransCoreTypeKey}"           
+      - name: user_case
+        relationship: many_to_one
+        sql: "{CUBE}.UserCase = {user_case.UserCase}"          
+      - name: user
+        relationship: many_to_one
+        sql: "{CUBE}.UserHierarchyKey = {user.UserHierarchyKey}"             
+
+      - name: reason_for_trade
+        relationship: many_to_one
+        sql: "{CUBE}.reasonfortradekey = {reason_for_trade.reasonfortradekey}"                                
+
+
+    dimensions:
+      - name: deal_kpi_key
+        sql: CONCAT(FactId,'-' ,DataPortion, '-', LegalEntityKey)
+        type: string
+        primary_key: true
+
+      - name: date
+        sql: DealDateKey
+        type: time
+
+      - name: kpibranchkey
+        sql: kpibranchkey
+        type: string                
+
+
+    measures:
+      - name: revenue_gbp
+        sql: >
+          "Revenue-GBP"
+        type: sum
+
+      - name: turnover_gbp
+        sql: >
+          "Turnover-GBP"
+        type: sum
+
+      - name: Margin
+        sql: "{revenue_gbp}*100/{turnover_gbp}"
+        type: number        
+        format: percent
+
+      - name: DealcountInclPremiums
+        sql: DealCount
+        type: sum
+
+      - name: Dealcounts
+        sql: DealCount
+        type: sum
+        filters: 
+          - sql: "{CUBE}.DealTypeKey <> 5"
+
+      - name: ADCs
+        sql: OriginCustomerKey
+        type: count_distinct
+
+      - name: TurnoverPerClient
+        sql: "{turnover_gbp}/{ADCs}"
+        type: number  
+
+      - name: TradesPerClient
+        sql: "{Dealcounts}/{ADCs}"
+        type: number          
+
+      - name: ActiveAffiliateCount
+        sql: AcqOriginAffiliateKey
+        type: count_distinct
+
+      - name: AffiliateCountDeal
+        sql: AcqOriginAffiliateKey
+        type: count_distinct             
+
+
+    pre_aggregations:
+      - name: dealkpiAgg
+        measures:
+          - deal_kpis.revenue_gbp
+          - deal_kpis.turnover_gbp
+          - deal_kpis.DealcountInclPremiums
+          - deal_kpis.ADCs
+          - deal_kpis.AffiliateCountDeal
+        dimensions:
+          - actual_budget_target.actual
+          - actual_budget_target.actual_budget_or_target
+          - calendar.FinMonthName
+          - calendar.FinYear
+        timeDimension: deal_kpis.date
+        granularity: day
+
+    
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started

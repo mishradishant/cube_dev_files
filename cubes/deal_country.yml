@@ -1,0 +1,21 @@
+cubes:
+  - name: deal_country
+    sql_table: Dim.Country
+    data_source: default
+
+    joins: []
+
+    dimensions:
+      - name: CountryKey
+        sql: CountryKey
+        type: number
+        primary_key: true
+
+      - name: countryname
+        sql: CountryName
+        type: string
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
+

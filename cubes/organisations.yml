@@ -1,0 +1,25 @@
+cubes:
+  - name: organisations
+    sql_table: Dim.Organisation
+    data_source: default
+
+    joins: []
+
+    dimensions:
+      - name: organisation_key
+        sql: OrganisationKey
+        type: string
+        primary_key: true
+
+      - name: organisation
+        sql: Organisation
+        type: string
+
+      - name: brand
+        sql: Brand
+        type: string
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
+

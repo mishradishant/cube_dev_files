@@ -1,0 +1,230 @@
+views:
+  - name: views
+
+    cubes:
+      - join_path: deal_kpis
+        includes: "*"
+        excludes:
+          - deal_kpi_key
+          - kpibranchkey
+
+      - join_path: leads
+        prefix: false
+        includes: "*"
+        excludes:
+          - OriginCustomerKey      
+          - kpibranchkey   
+            
+      - join_path: registration
+        prefix: false
+        includes: "*"     
+        excludes:
+          - OriginCustomerKey       
+          - kpibranchkey
+
+      - join_path: ndc
+        prefix: false
+        includes: "*"     
+        excludes:
+          - OriginCustomerKey   
+          - kpibranchkey     
+
+      - join_path: branch_working_day
+        prefix: false
+        includes: "*"     
+        excludes:
+          - BranchKPIKeyBudgetdate   
+          - BranchKPIKey
+          - BudgetDate                             
+
+      - join_path: acq_channel
+        prefix: false
+        includes: "*"
+        excludes:
+          - JunkAcqChannelKey
+
+      - join_path: aietv_band
+        prefix: false
+        includes: "*" 
+        excludes:
+          - AIETVKey        
+
+      - join_path: acq_sub_source
+        prefix: false
+        includes: "*"          
+
+      - join_path: actual_budget_target
+        prefix: false
+        includes: "*"
+        excludes:
+          - actual_budget_target_key
+
+      - join_path: affiliate_wealth_management_partner
+        prefix: false
+        includes: "*"      
+
+      - join_path: affiliate
+        prefix: false
+        includes: "*"    
+
+      - join_path: deal_kpis.bands_for_margin
+        prefix: false
+        includes: "*"
+        excludes:
+          - BandId    
+
+      - join_path: deal_kpis.bands_for_turnover
+        prefix: false
+        includes: "*"
+        excludes:
+          - BandId    
+
+      - join_path: branch
+        prefix: false
+        includes: "*"
+        excludes:
+          - branchkey          
+
+      - join_path: deal_kpis.business_type
+        prefix: false
+        includes: "*"
+        excludes:
+          - businesstypekey   
+
+      - join_path: calendar
+        prefix: false
+        includes: "*" 
+
+      - join_path: customer_types
+        prefix: false
+        includes: "*"
+        excludes:
+          - customer_type_key
+
+      - join_path: deal_kpis.currency_type
+        prefix: false
+        includes: "*"
+        excludes:
+          - CurrencyTypeKey          
+
+      - join_path: customer
+        prefix: false
+        includes: "*"
+        excludes:
+          - OriginCustomerKey 
+
+      - join_path: deal_kpis.deal_channel
+        prefix: false
+        includes: "*"
+        excludes:
+          - dealchannelkey  
+
+      - join_path: deal_country
+        prefix: false
+        includes: "*"
+        excludes:
+          - CountryKey                                    
+
+      - join_path: deal_kpis.deal_type
+        prefix: false
+        includes: "*"
+        excludes:
+          - DealTypeKey
+
+      - join_path: etv
+        prefix: false
+        includes: "*"
+        excludes:
+          - AcqEstTransValueKey     
+
+      - join_path: forecast
+        prefix: false
+        includes: "*"
+        excludes:
+          - ForecastKey                  
+
+      - join_path: geographical
+        prefix: false
+        includes: "*"
+        excludes:
+          - UserHierarchyKey  
+
+      - join_path: instigating_direction
+        prefix: false
+        includes: "*"
+        excludes:
+          - InstigatingDirectionKey  
+
+      - join_path: leadvalue
+        prefix: false
+        includes: "*"
+        excludes:
+          - LeadValueKey         
+
+      - join_path: m_and_a_proforma
+        prefix: false
+        includes: "*"
+        excludes:
+          - AcquisitionStatusKey                                     
+
+      - join_path: deal_kpis.organisations
+        prefix: false
+        includes: "*"
+        excludes:
+          - organisation_key
+
+      - join_path: organisation_legal_entity
+        prefix: false
+        includes: "*"
+        excludes:
+          - OrganisationLegalEntityKey
+
+      - join_path: pillar
+        prefix: false
+        includes: "*"
+        excludes:
+          - PillarKey
+
+      - join_path: ppc
+        prefix: false
+        includes: "*"
+        excludes:
+          - PPCKey
+
+      - join_path: pricingplan
+        prefix: false
+        includes: "*"
+        excludes:
+          - PricingPlankey 
+
+      - join_path: deal_kpis.product
+        prefix: false
+        includes: "*"
+        excludes:
+          - BusinessTypeKey               
+
+      - join_path: deal_kpis.source_application
+        prefix: false
+        includes: "*"
+        excludes:
+          - DataLookupValueKey   
+
+      - join_path: deal_kpis.tenure
+        prefix: false
+        includes: "*"
+        excludes:
+          - NewTransCoreTypeKey                        
+
+      - join_path: deal_kpis.reason_for_trade
+        prefix: false
+        includes: "*"
+        excludes:
+          - reasonfortradekey                    
+
+      - join_path: deal_kpis.user_case
+        prefix: false
+        includes: "*"
+
+
+
+

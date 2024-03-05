@@ -1,0 +1,65 @@
+cubes:
+  - name: geographical
+    sql_table: Dim.DD_UserHierarchy
+    data_source: default
+
+    joins: []
+
+    dimensions:
+      - name: UserHierarchyKey
+        sql: UserHierarchyKey
+        type: number
+        primary_key: true
+    
+      - name: DealtByBranch
+        sql: DealtByBranch
+        type: string
+
+      - name: ClientOwnerBranch
+        sql: ClientOwnerBranch
+        type: string
+
+      - name: ClientLeadGeneratorBranch
+        sql: ClientLeadGeneratorBranch
+        type: string
+
+      - name: DealerBranch
+        sql: DealerBranch
+        type: string
+
+      - name: ClientOwnerBranch
+        sql: ClientOwnerBranch
+        type: string
+
+      - name: ClientCAEBranch
+        sql: ClientCAEBranch
+        type: string
+
+      - name: ClientBDCFXBranch
+        sql: ClientBDCFXBranch
+        type: string
+
+      - name: BudgetedEntity
+        sql: BudgetedEntity
+        type: string
+
+      - name: AffiliateOwnerBranch
+        sql: AffiliateOwnerBranch
+        type: string
+
+      - name: AffiliateGeneratorBranch
+        sql: AffiliateGeneratorBranch
+        type: string
+
+      - name: AffiliateDealerBranch
+        sql: AffiliateDealerBranch
+        type: string        
+
+      - name: AffiliateBranch
+        sql: AffiliateBranch
+        type: string  
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
+

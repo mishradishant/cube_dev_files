@@ -1,0 +1,22 @@
+cubes:
+  - name: reason_for_trade
+    sql_table: Dim.ReasonForTrade
+    data_source: default
+
+    joins: []
+
+    dimensions:
+      - name: reasonfortradekey
+        sql: ReasonForTradekey
+        type: number
+        primary_key: true
+
+      - name: reasonfortrade
+        sql: ReasonForTrade
+        type: string
+
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
+

@@ -1,0 +1,32 @@
+cubes:
+  - name: actual_budget_target
+    sql_table: Dim.DataActualBudgetTarget
+    #data_source: default
+
+    #joins: []
+
+    dimensions:
+      - name: actual_budget_target_key
+        sql: DataActualBudgetTargetKey
+        type: number
+        primary_key: true
+
+      - name: actual_budget_or_target
+        sql: ValueName
+        type: string
+
+    segments:
+      - name: actual
+        sql: "{CUBE}.ValueName = 'Actual'"
+      - name: budget
+        sql: "{CUBE}.ValueName = 'Budget'"
+      - name: target
+        sql: "{CUBE}.ValueName = 'Target'"
+      - name: unknown
+        sql: "{CUBE}.ValueName = 'Unknown'"
+
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
+

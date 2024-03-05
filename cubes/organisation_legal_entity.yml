@@ -1,0 +1,21 @@
+cubes:
+  - name: organisation_legal_entity
+    sql_table: Dim.OrganisationLegalEntity
+    data_source: default
+
+    joins: []
+
+    dimensions:
+      - name: OrganisationLegalEntityKey
+        sql: OrganisationLegalEntityKey
+        type: number
+        primary_key: true
+
+      - name:  OrganisationLegalEntity
+        sql:  OrganisationLegalEntity
+        type: string
+      
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
+

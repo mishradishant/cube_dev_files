@@ -1,0 +1,26 @@
+cubes:
+  - name: affiliate_wealth_management_partner
+    sql_table: Dim.WealthManagementPartner
+    #data_source: default
+
+    #joins: []
+
+    dimensions:
+      - name: WealthManagementPartnerKey
+        sql: WealthManagementPartnerKey
+        type: number
+        primary_key: true
+
+      - name: WealthManagementPartner
+        sql: WealthManagementPartner
+        type: string
+
+      - name: WealthManagementPartnerDescription
+        sql: WealthManagementPartnerDescription
+        type: string
+    
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
+

@@ -1,0 +1,23 @@
+cubes:
+  - name: forecast
+    sql_table: DIM.vw_Forecast
+    data_source: default
+
+    joins: []
+
+    dimensions:
+      - name: ForecastKey
+        sql: ForecastKey
+        type: number
+        primary_key: true
+
+      - name: Forecast
+        sql: Forecast
+        type: string
+
+    
+
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
