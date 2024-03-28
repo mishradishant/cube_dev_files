@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Schema name="Deals">
+  <Cube name="Deals">
+    <Table name="deal_kpis"/>
+    <Dimension name="Deal Kpis">
+      <Hierarchy hasAll="true">
+        <Level name="Date" column="date" uniqueMembers="true"/>
+        <Level name="OriginCustomerKey" column="OriginCustomerKey" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+    <Measure name="Revenue Gbp" column="revenue_gbp" aggregator="sum"/>
+    <Measure name="Turnover Gbp" column="turnover_gbp" aggregator="sum"/> 
+  </Cube>
+</Schema>
